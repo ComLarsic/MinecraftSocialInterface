@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[45,)"
+#issueTrackerURL = ""
+license = "AGPL3"
+
+[[mods]]
+modId = "msimod"
+version = "${version}"
+displayName = "MsiMod"
+authors = "ComLarsic"
+description = '''
+Provides a web interface for tracking social behaviour between players
+'''
+#logoFile = ""
+
+[[dependencies.msimod]]
+modId = "forge"
+mandatory = true
+versionRange = "[45,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.msimod]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.4,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.msimod]]
+modId = "architectury"
+mandatory = true
+versionRange = "[8.1.79,)"
+ordering = "AFTER"
+side = "BOTH"

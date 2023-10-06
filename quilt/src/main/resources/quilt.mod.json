@@ -1,0 +1,41 @@
+{
+  "quilt_loader": {
+    "group": "${group}",
+    "id": "msimod",
+    "version": "${version}",
+    "name": "Example Mod",
+    "description": "Provides a web interface for tracking social behaviour between players",
+    "authors": [
+      "ComLarsic"
+    ],
+    "contact": {},
+    "license": "AGPL3",
+    "icon": "assets/examplemod/icon.png",
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "environment": "*",
+    "entrypoints": {
+      "init": [
+        "net.msimod.quilt.MsiModQuilt"
+      ]
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "version": "*"
+      },
+      {
+        "id": "quilt_base",
+        "version": "*"
+      },
+      {
+        "id": "minecraft",
+        "version": ">=1.19.4"
+      },
+      {
+        "id": "architectury",
+        "version": ">=8.1.79"
+      }
+    ]
+  },
+  "schema_version": 1
+}

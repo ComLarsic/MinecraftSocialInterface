@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "msimod",
+  "version": "${version}",
+  "name": "MsiMod",
+  "description": "Provides a web interface for tracking social behaviour between players",
+  "authors": [
+    "ComLarsic"
+  ],
+  "contact": {},
+  "license": "AGPL3",
+  "icon": "assets/examplemod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.msimod.common.fabric.MsiModFabric"
+    ]
+  },
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.19.4",
+    "architectury": ">=8.1.79"
+  }
+}
