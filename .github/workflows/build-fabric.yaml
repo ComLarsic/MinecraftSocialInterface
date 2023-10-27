@@ -9,5 +9,5 @@ jobs:
     steps:
       - run: "echo 'Building for fabric on ${{ runner.os }}'"
       - uses: actions/checkout@v4
-      - run: "ls -la"
+      - uses: gradle/gradle-build-action@v2
       - run: "./gradlew fabric:build"

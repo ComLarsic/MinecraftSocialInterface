@@ -9,4 +9,5 @@ jobs:
     steps:
       - run: "echo 'Building for forge on ${{ runner.os }}'"
       - uses: actions/checkout@v4
+      - uses: gradle/gradle-build-action@v2
       - run: "./gradlew forge:build"
