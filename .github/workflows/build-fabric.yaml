@@ -1,0 +1,9 @@
+name: "Build Fabric"
+run-name: "Building fabric"
+on: [push]
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - run: "echo 'Building for fabric on ${{ runner.os }}'"
+      - run: "./gradlew fabric:build"

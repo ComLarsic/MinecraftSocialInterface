@@ -1,0 +1,9 @@
+name: "Build Forge"
+run-name: "Building forge"
+on: [push]
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - run: "echo 'Building for forge on ${{ runner.os }}'"
+      - run: "./gradlew forge:build"

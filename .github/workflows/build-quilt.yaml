@@ -1,0 +1,9 @@
+name: "Build Quilt"
+run-name: "Building Quilt"
+on: [push]
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - run: "echo 'Building for quilt on ${{ runner.os }}'"
+      - run: "./gradlew quilt:build"
