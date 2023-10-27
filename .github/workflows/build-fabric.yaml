@@ -1,5 +1,5 @@
 name: "Build Fabric"
-run-name: "Building fabric"
+run-name: "Building Fabric"
 on: [push]
 permissions:
   actions: "write"

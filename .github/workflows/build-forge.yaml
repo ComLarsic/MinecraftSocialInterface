@@ -1,5 +1,5 @@
 name: "Build Forge"
-run-name: "Building forge"
+run-name: "Building Forge"
 on: [push]
 permissions:
   actions: "write"
