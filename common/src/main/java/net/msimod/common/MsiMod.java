@@ -1,22 +1,31 @@
 package net.msimod.common;
 
+import com.google.gson.Gson;
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import dev.architectury.event.events.client.ClientSystemMessageEvent;
 import dev.architectury.event.events.common.ChatEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.TickEvent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.ServerOpListEntry;
 import net.msimod.common.chat.ChatEventHandler;
 import net.msimod.common.chat.ChatLogger;
 import net.msimod.common.networking.server.ApiServer;
 
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.UUID;
 
 public class MsiMod {
     /// The id fot the mod
     public static final String MOD_ID = "msimod";
+    // The logger for the mod
+    public static final org.apache.logging.log4j.Logger LOGGER = org.apache.logging.log4j.LogManager.getLogger(MOD_ID);
 
     /// The static reference to the server
     public static MinecraftServer MINECRAFT_SERVER;
@@ -50,9 +59,14 @@ public class MsiMod {
     private static void addPlayer(MinecraftServer server) {
         // Add a player to the server
         if (server.getProfileCache().get(SERVER_PLAYER_UUID).isEmpty()) {
-            server.getProfileCache().add(new GameProfile(SERVER_PLAYER_UUID, "Server"));
+            var profile = new GameProfile(SERVER_PLAYER_UUID, "Server");
+            server.getProfileCache().add(profile);
         }
         var gameProfile = server.getProfileCache().get(SERVER_PLAYER_UUID).get();
         SERVER_PLAYER = new ServerPlayer(server, Objects.requireNonNull(server.getLevel(ServerLevel.OVERWORLD)), gameProfile);
+
+        // Set server player of UUID.Empty as OP
+        var opList = server.getPlayerList().getOps();
+        opList.add(new ServerOpListEntry(gameProfile, server.getOperatorUserPermissionLevel(), opList.canBypassPlayerLimit(gameProfile)));
     }
 }

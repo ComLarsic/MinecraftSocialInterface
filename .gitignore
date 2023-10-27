@@ -19,5 +19,5 @@ classes/
 *.launch
 
 node_modules
-dist/bundle.js
+dist/
 package-lock.json

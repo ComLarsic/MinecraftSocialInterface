@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import net.msimod.common.MsiMod;
 
 public class PlayerServlet extends HttpServlet {
-    public class PlayerInfo {
+    public static class PlayerInfo {
         public String name;
         public int ping;
         public int x;

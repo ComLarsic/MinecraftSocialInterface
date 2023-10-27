@@ -14,7 +14,7 @@ public class ChatEventHandler implements ChatEvent.Received {
     @Override
     public EventResult received(@Nullable ServerPlayer player, Component component) {
         if (player == null) return EventResult.pass();
-        MsiMod.CHAT_LOGGER.append(player.getUUID(), component.getString());
+        MsiMod.CHAT_LOGGER.append(player.getUUID(), player.getName().getString(), component.getString());
         return EventResult.pass();
     }
 }
