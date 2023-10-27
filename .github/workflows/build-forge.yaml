@@ -1,6 +1,8 @@
 name: "Build Forge"
 run-name: "Building forge"
 on: [push]
+permissions:
+  actions: "write"
 jobs:
   build:
     runs-on: "ubuntu-latest"
