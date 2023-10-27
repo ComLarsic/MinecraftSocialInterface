@@ -6,4 +6,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - run: "echo 'Building for quilt on ${{ runner.os }}'"
+      - run: "git clone ${{ github.repository }} repo"
+      - run: "cd repo"
+      - run: "echo 'Cloned ${{ github.repository }}'"
       - run: "./gradlew quilt:build"
