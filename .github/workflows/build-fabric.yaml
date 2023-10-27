@@ -6,7 +6,5 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - run: "echo 'Building for fabric on ${{ runner.os }}'"
-      - run: "git clone ${{ github.repository }} repo"
-      - run: "cd repo"
-      - run: "echo 'Cloned ${{ github.repository }}'"
+      - uses: actions/checkout@v4
       - run: "./gradlew fabric:build"
