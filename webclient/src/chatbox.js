@@ -14,10 +14,15 @@ export class ChatBox extends LitElement {
                 height: 400px;
                 overflow: scroll;
                 auto-scroll: true;
+
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
             }
 
             input {
                 width: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
             }
         `;
     }
