@@ -18,13 +18,6 @@ classes/
 .settings
 *.launch
 
-webclient/.DS_Store
-webclient/node_modules
-webclient//build
-webclient/.svelte-kit
-webclient//package
-webclient/.env
-webclient/.env.*
-webclient/!.env.example
-webclient/vite.config.js.timestamp-*
-webclient/vite.config.ts.timestamp-*
+node_modules
+dist/
+package-lock.json

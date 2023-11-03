@@ -11,10 +11,19 @@ import org.jetbrains.annotations.Nullable;
  * The event handler for a chat event
  */
 public class ChatEventHandler implements ChatEvent.Received {
+    private static ChatLogger CHAT_LOGGER;
+
+    public ChatEventHandler(ChatLogger chatLogger) {
+        CHAT_LOGGER = chatLogger;
+    }
+
     @Override
     public EventResult received(@Nullable ServerPlayer player, Component component) {
-        if (player == null) return EventResult.pass();
-        MsiMod.CHAT_LOGGER.append(player.getUUID(), component.getString());
+        if (player == null) {
+            MsiMod.LOGGER.info("Non-player Message: " + component.getString());
+            return EventResult.pass();
+        }
+        CHAT_LOGGER.append(player.getUUID(), player.getName().getString(), component.getString());
         return EventResult.pass();
     }
 }
