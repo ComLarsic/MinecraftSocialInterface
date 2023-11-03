@@ -3,20 +3,19 @@ package net.msimod.common.chat;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /// Handles logging chat messages
 public class ChatLogger {
-    public static final int MAX_CHAT_LOG_SIZE = 100;
+    public static final int MAX_CHAT_LOG_SIZE = 100_000_000;
 
     /// A message in the chat
     public static class ChatMessageLog {
         public @Nullable UUID sender;
-        public String senderName;
+        public @Nullable String senderName;
         public String contents;
 
-        public ChatMessageLog(@Nullable UUID sender, String senderName, String contents) {
+        public ChatMessageLog(@Nullable UUID sender, @Nullable String senderName, String contents) {
             this.sender = sender;
             this.senderName = senderName;
             this.contents = contents;
@@ -30,6 +29,15 @@ public class ChatLogger {
     /// Will remove the oldest message if the log is full.
     public void append(UUID sender, String senderName, String contents) {
         chatLog.add(new ChatMessageLog(sender, senderName, contents));
+
+        if (chatLog.size() > MAX_CHAT_LOG_SIZE) {
+            chatLog.remove(0);
+        }
+    }
+
+    /// Append a non-player message to the log
+    public void appendNonPlayer(String contents) {
+        chatLog.add(new ChatMessageLog(null, null, contents));
 
         if (chatLog.size() > MAX_CHAT_LOG_SIZE) {
             chatLog.remove(0);

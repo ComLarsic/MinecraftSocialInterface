@@ -35,7 +35,7 @@ export class ChatBox extends LitElement {
         fetch("/api/chat/log")
             .then(response => response.json())
             .then(data => {
-              this.messages = data;
+                this.messages = data;
             });
         setTimeout(() => {
             this.fetchData();
@@ -44,11 +44,11 @@ export class ChatBox extends LitElement {
 
     render() {
         return html`
-            <textarea readonly>${this.messages.map(message => `[${message.senderName}]: ${message.contents}\n`)}</textarea>
+            <textarea readonly>${this.messages.map(formatMessage)}</textarea>
             <input type="text" @change="${this._handleInput}" @keypress="${this._handleEnter}"/>
         `;
     }
-    
+
     _handleInput(e) {
         this._handleSend(e.target.value);
         e.target.value = "";
@@ -62,6 +62,16 @@ export class ChatBox extends LitElement {
             }
         });
     }
+}
+
+/**
+ * Format the message as string
+ * @param {*} message 
+ * @returns {string} The formatted chat message
+ */
+const formatMessage = (message) => {
+    let name = message.senderName == undefined ? ">" : "[" + message.senderName + "]: ";
+    return name + message.contents + "\n";
 }
 
 customElements.define("chat-box", ChatBox);

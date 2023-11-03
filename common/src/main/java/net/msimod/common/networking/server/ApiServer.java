@@ -1,16 +1,13 @@
 package net.msimod.common.networking.server;
 
-import net.minecraft.server.MinecraftServer;
 import net.msimod.common.MsiMod;
 import net.msimod.common.networking.servlet.ChatServlet;
 import net.msimod.common.networking.servlet.PlayerServlet;
 import net.msimod.common.networking.servlet.ChatLogServlet;
 import net.msimod.common.networking.webclient.WebClientServlet;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 
 /**
  * The server that provides the openings for the api
