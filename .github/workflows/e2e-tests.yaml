@@ -18,6 +18,7 @@ jobs:
           node-version: 21.5.0
       - run: "cd webclient && npm install"
       - run: "chmod +x ./gradlew"
-      - run: "nohup ./gradlew fabric:runServer >> LOG.txt"
+      - run: "./gradlew build"
+      - run: "nohup ./gradlew fabric:runServer >> LOG.txt &"
       - run: "sleep 30s"
       - run: "cd webclient && npm run cypress"
