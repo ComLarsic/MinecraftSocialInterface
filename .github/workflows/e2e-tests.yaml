@@ -4,7 +4,7 @@ on: [push]
 permissions:
   actions: "write"
 jobs:
-  build:
+  cypress:
     runs-on: "ubuntu-latest"
     steps:
       - run: "echo 'Building for fabric on ${{ runner.os }}'"
@@ -20,5 +20,7 @@ jobs:
       - run: "chmod +x ./gradlew"
       - run: "./gradlew fabric:build"
       - run: "nohup ./gradlew fabric:runServer >> LOG.txt &"
-      - run: "sleep 30s"
+      - run: "sleep 60s"
       - run: "cd webclient && npm run cypress"
+      - run: "killall java"
+      - run: "cat LOG.txt"
