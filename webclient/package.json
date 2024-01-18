@@ -3,6 +3,8 @@
     "lit": "^3.0.0"
   },
   "devDependencies": {
+    "cypress": "^13.6.3",
+    "cypress-localstorage-commands": "^2.2.5",
     "glob": "^10.3.10",
     "http-server": "^14.1.1",
     "rollup": "^4.1.4",
@@ -11,5 +13,9 @@
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2"
   },
-  "scripts": {}
+  "scripts": {
+    "build": "./node_modules/rollup/dist/bin/rollup -c",
+    "start": "http-server -c-1 -p 8080",
+    "cypress": "./node_modules/cypress/bin/cypress run"
+  }
 }

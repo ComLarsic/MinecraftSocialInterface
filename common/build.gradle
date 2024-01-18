@@ -39,7 +39,7 @@ publishing {
 // Call rollup in weblient
 task rollup(type: Exec) {
     workingDir '../webclient'
-    commandLine 'rollup', '-c'
+    commandLine 'npm', 'run', 'build', '-c'
 }
 
 // Embed the html and js files into the jar

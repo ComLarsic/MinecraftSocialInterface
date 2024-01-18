@@ -24,7 +24,7 @@ export class AuthManager {
         SocketManager.sendMessage(new Message(MessageHandlers.AUTH, MessageTypes.REGISTER, null, {}));
         SocketManager.registerCallback((message) => {
             // The first message is the login url
-            if (this._loginUrl === undefined) {
+            if (message.data.includes("https://") || this._loginUrl === undefined) {
                 this._loginUrl = message.data;
                 return;
             }
