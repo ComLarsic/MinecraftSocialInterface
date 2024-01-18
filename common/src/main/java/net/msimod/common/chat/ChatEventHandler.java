@@ -5,6 +5,7 @@ import dev.architectury.event.events.common.ChatEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.msimod.common.MsiMod;
+
 import org.jetbrains.annotations.Nullable;
 
 /**

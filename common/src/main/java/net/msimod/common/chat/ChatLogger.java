@@ -1,7 +1,9 @@
 package net.msimod.common.chat;
 
 import org.jetbrains.annotations.Nullable;
+import net.msimod.common.networking.socket.chat.ChatMessageHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -10,7 +12,7 @@ public class ChatLogger {
     public static final int MAX_CHAT_LOG_SIZE = 100_000_000;
 
     /// A message in the chat
-    public static class ChatMessageLog {
+    public static class ChatMessageLog implements Serializable {
         public @Nullable UUID sender;
         public @Nullable String senderName;
         public String contents;
@@ -28,7 +30,9 @@ public class ChatLogger {
     /// Appends a message to the chat log.
     /// Will remove the oldest message if the log is full.
     public void append(UUID sender, String senderName, String contents) {
-        chatLog.add(new ChatMessageLog(sender, senderName, contents));
+        var message = new ChatMessageLog(sender, senderName, contents);
+        chatLog.add(message);
+        ChatMessageHandler.sendChatToClient(message);
 
         if (chatLog.size() > MAX_CHAT_LOG_SIZE) {
             chatLog.remove(0);

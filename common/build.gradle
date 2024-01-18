@@ -4,7 +4,6 @@ architectury {
 
 loom {
     accessWidenerPath = file("src/main/resources/msimod.accesswidener")
-
 }
 
 dependencies {
@@ -14,10 +13,16 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
 
-    // Jetty 
-    implementation "org.eclipse.jetty:jetty-server:9.4.26.v20200117"
-    implementation "org.eclipse.jetty:jetty-servlet:9.4.26.v20200117"
-    implementation "javax.servlet:javax.servlet-api:3.1"
+    // Jetty x
+    modImplementation "org.eclipse.jetty:jetty-server:9.4.26.v20200117"
+    modImplementation "org.eclipse.jetty:jetty-servlet:9.4.26.v20200117"
+    modImplementation "org.eclipse.jetty:jetty-servlets:9.4.26.v20200117"
+    modImplementation "org.eclipse.jetty.websocket:websocket-server:9.4.26.v20200117"
+    modImplementation "javax.servlet:javax.servlet-api:3.1"
+    // oauth2     
+    modImplementation 'com.auth0:java-jwt:4.4.0'
+    modImplementation 'com.auth0:jwks-rsa:0.22.1'
+    modImplementation 'com.nimbusds:nimbus-jose-jwt:9.10.1'
 }
 
 publishing {
@@ -27,15 +32,19 @@ publishing {
             from components.java
         }
     }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        // Add repositories to publish to here.
     }
+}
+
+// Call rollup in weblient
+task rollup(type: Exec) {
+    workingDir '../webclient'
+    commandLine 'rollup', '-c'
 }
 
 // Embed the html and js files into the jar
 jar {
+    dependsOn rollup
     from("../webclient/dist") {
         into("web")
     }

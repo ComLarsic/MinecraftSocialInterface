@@ -1,0 +1,3 @@
+[submodule "MsiPostService"]
+	path = MsiPostService
+	url = https://github.com/ComLarsic/MsiPostService.git
