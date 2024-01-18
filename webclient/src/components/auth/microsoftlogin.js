@@ -8,7 +8,7 @@ import { AuthManager } from "../../lib/auth/authmanager";
 export class MicrosoftLoginButton extends LitElement {
     render() {
         return html`
-            <button @click="${this._handleClick}">Login with Microsoft</button>
+            <button id="microsoft-login-button" @click="${this._handleClick}">Login with Microsoft</button>
         `
     }
 
