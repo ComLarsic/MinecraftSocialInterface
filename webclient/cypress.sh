@@ -17,12 +17,6 @@ do
     then
         break
     fi
-
-    # Check if the server has failed
-    if ! pgrep -x "gradlew" > /dev/null
-    then
-        break
-    fi
 done
 # Start the cypress tests
 echo "Webclient is up"
