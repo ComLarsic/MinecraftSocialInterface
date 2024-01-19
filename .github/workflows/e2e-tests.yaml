@@ -21,10 +21,7 @@ jobs:
       - run: "./gradlew fabric:build"
       - run: "nohup ./gradlew fabric:runServer >> LOG.txt &"
         # Wait until the server is started
-      - run: |
-          "while ! netstat -tna | grep 'LISTEN\>' | grep -q ':8080\>'; do
-            sleep 10
-          done"
+      - run: "sh webclient/cypress.sh"
       - run: "cd webclient && npm run cypress"
       - name: Post Server
         if: always()
