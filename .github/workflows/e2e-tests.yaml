@@ -20,7 +20,11 @@ jobs:
       - run: "chmod +x ./gradlew"
       - run: "./gradlew fabric:build"
       - run: "nohup ./gradlew fabric:runServer >> LOG.txt &"
-      - run: "sleep 60s"
+        # Wait until the server is started
+      - run: |
+          "while ! netstat -tna | grep 'LISTEN\>' | grep -q ':8080\>'; do
+            sleep 10
+          done"
       - run: "cd webclient && npm run cypress"
-      - run: "killall java"
-      - run: "cat LOG.txt"
+      - post: "killall java"
+      - post: "cat LOG.txt"

@@ -8,12 +8,14 @@ const root = (): Cypress.Chainable<JQuery<HTMLElement>> => cy.get("app-root").sh
 
 describe("Login Test", () => {
     beforeEach(() => {
-        cy.visit("http://localhost:8080/");
+        cy.visit("http://localhost:8080/", {
+            retryOnStatusCodeFailure: true,
+        });
         // Clear local storage before each test
         cy.clearAllLocalStorage();
     });
-    
-    it.only("shows login button", () => {   
+
+    it.only("shows login button", () => {
         root().find("microsoft-login-button").should("exist");
     });
 
