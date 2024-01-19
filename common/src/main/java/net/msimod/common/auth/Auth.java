@@ -1,6 +1,8 @@
 package net.msimod.common.auth;
 
 import java.net.URL;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +11,8 @@ import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import com.auth0.jwt.JWT;
 import com.google.common.base.Verify;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.nimbusds.jose.crypto.RSADecrypter;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -27,7 +31,7 @@ public class Auth {
     /// The url to the jwk provider
     public final static String JWK_PROVIDER = "https://login.microsoftonline.com/consumers/discovery/v2.0/keys";
     /// The url to request as token verification
-    private final static String VERIFY_URL = "https://gamerpics.xboxlive.com/users/me/gamerpic";
+    private final static String VERIFY_URL = "https://msg.xboxlive.com/users/";
 
     /**
      * Validate a request's token.
@@ -49,6 +53,7 @@ public class Auth {
 
     /**
      * Validate a socket message's token.
+     * return response.getStatus() == 200;
      * 
      * @param message
      * @return Whether the token is valid.
@@ -67,11 +72,15 @@ public class Auth {
      */
     public static boolean validateToken(String token) {
         try {
+            var accessToken = XLiveAuth.GetAccessToken(token);
+            var xui = XLiveAuth.GetXui(token);
+            var xuid = (String) xui.get("xid");
             var client = new HttpClient(new SslContextFactory.Client(false));
             client.start();
-            var request = client.newRequest(VERIFY_URL)
-                    .method("PUT")
-                    .header("Authentication", "Bearer: " + token);
+            var uri = VERIFY_URL + "xuid(" + xuid + ")/inbox";
+            var request = client.newRequest(uri)
+                    .method("GET")
+                    .header("Authorization", accessToken);
             var response = request.send();
             return response.getStatus() == 200;
         } catch (Exception e) {

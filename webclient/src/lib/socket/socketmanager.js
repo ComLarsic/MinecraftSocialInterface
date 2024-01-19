@@ -22,11 +22,32 @@ export class SocketManager {
     }
 
     /**
+     * @description Get the socket when its ready
+     */
+    static async socket() {
+        const checkCycles = 10;
+        return new Promise((resolve, reject) => {
+            let cycles = 0;
+            const interval = setInterval(() => {
+                if (this._socket !== undefined) {
+                    clearInterval(interval);
+                    resolve(this._socket);
+                }
+                if (cycles > checkCycles) {
+                    reject("Failed to get socket")
+                }
+                cycles += 1;
+            }, 100);
+        });
+    }
+
+    /**
      * @description The repository for the chat
      * @param {string} message The message to send
      */
     static async sendMessage(message) {
-        this._socket.send(JSON.stringify(message));
+        const socket = await this.socket();
+        socket.send(JSON.stringify(message));
     }
 
     /**

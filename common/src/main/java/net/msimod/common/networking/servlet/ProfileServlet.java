@@ -20,8 +20,9 @@ import net.msimod.common.auth.Auth;
 public class ProfileServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (Auth.validateToken(request, response))
+        if (!Auth.validateToken(request, response)) {
             return;
+        }
 
         // Read parameters
         var id = request.getParameter("id");

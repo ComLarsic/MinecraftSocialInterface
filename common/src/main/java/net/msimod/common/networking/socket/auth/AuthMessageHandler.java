@@ -71,12 +71,12 @@ public class AuthMessageHandler implements MessageHandler {
     }
 
     @Override
-    public void register(Session session) {
+    public void register(Session session, Message message) {
         var sessionId = UUID.randomUUID();
         var url = CreateAuthUrl(sessionId);
         var gson = new Gson();
-        var message = new Message(Message.Handlers.AUTH, Message.Type.UPDATE, url);
-        var json = gson.toJson(message);
+        var response = new Message(Message.Handlers.AUTH, Message.Type.REGISTER, url);
+        var json = gson.toJson(response);
         MsiMod.LOGGER.info("Sending auth url to client: {}", json);
         try {
             session.getRemote().sendString(json);
@@ -88,7 +88,7 @@ public class AuthMessageHandler implements MessageHandler {
     }
 
     @Override
-    public void unregister(Session session) {
+    public void unregister(Session session, Message message) {
         _linkedClients.values().remove(session);
     }
 

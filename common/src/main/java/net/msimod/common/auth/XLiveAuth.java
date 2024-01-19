@@ -1,5 +1,6 @@
 package net.msimod.common.auth;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.jetty.client.HttpClient;
@@ -9,6 +10,8 @@ import org.eclipse.jetty.util.Fields;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.internal.LinkedTreeMap;
 
 import net.msimod.common.MsiMod;
 
@@ -79,11 +82,38 @@ public class XLiveAuth {
                     .content(new StringContentProvider(json.toString()), "application/json");
             var response = request.send();
             var jsonResponse = response.getContentAsString();
-            var responseMap = new Gson().fromJson(jsonResponse, HashMap.class);
-            var token = (String) responseMap.get("Token");
-            return token;
+            return jsonResponse;
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Get the access token from the token
+     * 
+     * @param token
+     * @return
+     * @throws ClassCastException
+     */
+    public static String GetAccessToken(String token) throws JsonSyntaxException {
+        var tokenMap = new Gson().fromJson(token, HashMap.class);
+        var tokenBearer = (String) tokenMap.get("Token");
+        var xui = GetXui(token);
+        var userhash = (String) xui.get("uhs");
+        return "XBL3.0 x=" + userhash + ";" + tokenBearer;
+    }
+
+    /**
+     * Get a xui from a token
+     * 
+     * @param token
+     * @return
+     * @throws ClassCastException
+     */
+    public static LinkedTreeMap<Object, Object> GetXui(String token) throws ClassCastException {
+        var tokenMap = new Gson().fromJson(token, HashMap.class);
+        var claims = LinkedTreeMap.class.cast(tokenMap.get("DisplayClaims"));
+        var list = ArrayList.class.cast(claims.get("xui"));
+        return LinkedTreeMap.class.cast(list.get(0));
     }
 }

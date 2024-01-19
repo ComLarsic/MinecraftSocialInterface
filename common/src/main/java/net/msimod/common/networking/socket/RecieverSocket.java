@@ -52,7 +52,7 @@ public class RecieverSocket {
             if (handler.auhtenticate()) {
                 if (!Auth.validateToken(message)) {
                     // Send unauthorized message
-                    var json = gson.toJson(new Message(Message.Handlers.NONE, Message.Type.UNAUTHORIZED, null));
+                    var json = gson.toJson(new Message(Message.Handlers.NONE, Message.Type.UNAUTHORIZED, ""));
                     session.getRemote().sendString(json);
                     return;
                 }
@@ -85,13 +85,13 @@ public class RecieverSocket {
     private void handle(MessageHandler handler, Session session, Message message) {
         switch (message.type) {
             case REGISTER:
-                handler.register(session);
+                handler.register(session, message);
                 break;
             case UPDATE:
-                handler.update(session, message.data);
+                handler.update(session, message);
                 break;
             case UNREGISTER:
-                handler.unregister(session);
+                handler.unregister(session, message);
                 break;
             default:
                 break;

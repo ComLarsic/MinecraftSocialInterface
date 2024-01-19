@@ -24,7 +24,7 @@ public interface MessageHandler {
      * 
      * @param session The session to register
      */
-    public default void register(Session session) {
+    public default void register(Session session, Message message) {
     }
 
     /**
@@ -32,7 +32,7 @@ public interface MessageHandler {
      * 
      * @param session The session to unregister
      */
-    public default void unregister(Session session) {
+    public default void unregister(Session session, Message message) {
     }
 
     /**
@@ -41,6 +41,6 @@ public interface MessageHandler {
      * @param session The session the message came from
      * @param message The message
      */
-    public default void update(Session session, Object messageData) {
+    public default void update(Session session, Message message) {
     }
 }

@@ -94,17 +94,12 @@ public class MsiMod {
     /// Add the server player to the server
     private static void addPlayer(MinecraftServer server) {
         // Add a player to the server
-        if (server.getProfileCache().get(SERVER_PLAYER_UUID).isEmpty()) {
-            var profile = new GameProfile(SERVER_PLAYER_UUID, "Server");
+        if (!server.getProfileCache().get(SERVER_PLAYER_UUID).isEmpty()) {
+            var profile = new GameProfile(SERVER_PLAYER_UUID, ">");
             server.getProfileCache().add(profile);
         }
         var gameProfile = server.getProfileCache().get(SERVER_PLAYER_UUID).get();
         SERVER_PLAYER = new ServerPlayer(server, Objects.requireNonNull(server.getLevel(ServerLevel.OVERWORLD)),
                 gameProfile);
-
-        // Set server player of UUID.Empty as OP
-        var opList = server.getPlayerList().getOps();
-        opList.add(new ServerOpListEntry(gameProfile, server.getOperatorUserPermissionLevel(),
-                opList.canBypassPlayerLimit(gameProfile)));
     }
 }

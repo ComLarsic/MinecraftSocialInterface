@@ -7,9 +7,11 @@ import org.eclipse.jetty.websocket.api.Session;
 
 import com.google.gson.Gson;
 import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.server.MinecraftServer;
 import net.msimod.common.MsiMod;
+import net.msimod.common.auth.XLiveAuth;
 import net.msimod.common.chat.ChatLogger.ChatMessageLog;
 import net.msimod.common.networking.socket.Message;
 import net.msimod.common.networking.socket.MessageHandler;
@@ -43,27 +45,28 @@ public class ChatMessageHandler implements MessageHandler {
     }
 
     @Override
-    public void register(Session session) {
+    public void register(Session session, Message message) {
         _linkedClients.add(session);
     }
 
     @Override
-    public void unregister(Session session) {
+    public void unregister(Session session, Message message) {
         _linkedClients.remove(session);
     }
 
     @Override
-    public void update(Session session, Object messageData) {
-        var message = (String) messageData;
+    public void update(Session session, Message message) {
+        var user = (String) XLiveAuth.GetXui(message.accessToken).get("gtg");
+        var messageStr = (String) message.data;
         var server = MsiMod.MINECRAFT_SERVER;
 
         // Check if message is command
-        if (message.startsWith("/")) {
-            processCommand(server, message);
+        if (messageStr.startsWith("/")) {
+            processCommand(server, messageStr);
             return;
         }
         // Broadcast the message to the server if it is not a command
-        broadcastChatMessage(server, message);
+        broadcastChatMessage(server, user, messageStr);
     }
 
     /**
@@ -90,10 +93,12 @@ public class ChatMessageHandler implements MessageHandler {
      * @param server  The server to broadcast the message to
      * @param message The message to broadcast
      */
-    private void broadcastChatMessage(MinecraftServer server, String message) {
+    private void broadcastChatMessage(MinecraftServer server, String player, String message) {
+        var messageStr = "[" + player + "]: " + message;
         server.getPlayerList().broadcastChatMessage(
-                PlayerChatMessage.system(message),
+                PlayerChatMessage.system(messageStr),
                 MsiMod.SERVER_PLAYER,
                 ChatType.bind(ChatType.CHAT, MsiMod.SERVER_PLAYER.createCommandSourceStack()));
+        MsiMod.SERVER_PLAYER.setCustomName(Component.literal(""));
     }
 }

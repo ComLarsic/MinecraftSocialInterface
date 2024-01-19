@@ -19,8 +19,9 @@ import net.msimod.common.networking.dto.PlayerDto;
 public class PlayerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (Auth.validateToken(request, response))
+        if (!Auth.validateToken(request, response)) {
             return;
+        }
 
         var PlayerDto = GetPlayerDto();
         var json = new Gson().toJson(PlayerDto);

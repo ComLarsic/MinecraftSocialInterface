@@ -14,8 +14,9 @@ public class ChatLogServlet extends HttpServlet {
     /// Get the chat log
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (Auth.validateToken(request, response))
+        if (!Auth.validateToken(request, response)) {
             return;
+        }
 
         var chatLog = MsiMod.CHAT_LOGGER.getChatLog();
         var gson = new Gson();

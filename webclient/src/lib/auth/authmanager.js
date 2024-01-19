@@ -24,13 +24,19 @@ export class AuthManager {
         SocketManager.sendMessage(new Message(MessageHandlers.AUTH, MessageTypes.REGISTER, null, {}));
         SocketManager.registerCallback((message) => {
             // The first message is the login url
-            if (message.data.includes("https://") || this._loginUrl === undefined) {
+            if (message.handler !== MessageHandlers.AUTH) {
+                return;
+            }
+            if (message.type === MessageTypes.REGISTER) {
                 this._loginUrl = message.data;
                 return;
             }
-            // The second message is the access token
-            this._accessToken = message.data;
-            localStorage.setItem("accessToken", this._accessToken);
+            if (message.type === MessageTypes.UPDATE) {
+                // The second message is the access token
+                this._accessToken = message.data;
+                localStorage.setItem("accessToken", this._accessToken);
+                return;
+            }
         });
     }
 
