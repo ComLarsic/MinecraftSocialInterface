@@ -1,5 +1,6 @@
 package net.msimod.common.networking.socket.auth;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,8 +40,9 @@ public class AuthMessageHandler implements MessageHandler {
      */
     public static void sendAccessTokenToClient(UUID sessionId, String accessToken) {
         var session = _linkedClients.get(sessionId);
+        var tokenBase64 = Base64.getEncoder().encodeToString(accessToken.getBytes());
         var gson = new Gson();
-        var json = gson.toJson(new Message(Message.Handlers.AUTH, Message.Type.UPDATE, accessToken));
+        var json = gson.toJson(new Message(Message.Handlers.AUTH, Message.Type.UPDATE, tokenBase64));
         if (session == null)
             return;
         try {

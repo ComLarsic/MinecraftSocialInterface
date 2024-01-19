@@ -34,6 +34,11 @@ public class ProfileServlet extends HttpServlet {
                 .build();
         try {
             HttpResponse<String> profileResponse = client.send(profileRequest, BodyHandlers.ofString());
+            if (profileResponse.statusCode() != 200) {
+                MsiMod.LOGGER.error("Failed to contact post server to get profile");
+                response.sendError(500);
+                return;
+            }
             response.getWriter().write(profileResponse.body());
         } catch (InterruptedException e) {
             MsiMod.LOGGER.error("Failed to contact post server to get profile");

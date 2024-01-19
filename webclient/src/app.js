@@ -21,7 +21,7 @@ window.onload = () => {
 export class App extends LitElement {
     static get properties() {
       return {
-          isLoggedIn: { type: Boolean }
+          isLoggedIn: { type: Promise }
       };
     }
 
@@ -42,22 +42,27 @@ export class App extends LitElement {
 
     constructor() {
         super();
-        this.isLoggedIn = false;
+        this.isLoggedIn = undefined;
         SocketManager.init()
             .then(setTimeout(() => {
                 AuthManager.init();
             }, 200));
         const checkLoggedIn = setInterval(async () => {
-            if (await AuthManager.isLoggedIn()) {
+            if (AuthManager.isLoggedIn()) {
                 clearInterval(checkLoggedIn);
                 Chat.init();
                 this.isLoggedIn = true;
+            } else {
+                this.isLoggedIn = false;
             }
         }, 200);
     }
   
     render() {
         // If the user is not logged in, show the login button
+        if (this.isLoggedIn === undefined) {
+          return html``;
+        }
         if (!this.isLoggedIn) {
           return html`
             <div class="overlay"></div>

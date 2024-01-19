@@ -85,7 +85,7 @@ export class PlayerListElement extends LitElement {
         localStorage.setItem("profiles", JSON.stringify(this.profiles));
         setTimeout(async () => {
             await this.fetchData();
-        }, 1000);
+        }, 5000);
     }
 
     render() {

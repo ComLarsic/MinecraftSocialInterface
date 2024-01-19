@@ -54,7 +54,7 @@ export class ProfileList {
         const response = await fetch(routes.profile + "?id=" + uuid, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken,
+                "Authorization": accessToken,
             },
         });
         const json = await response.json();

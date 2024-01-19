@@ -56,7 +56,7 @@ export class Chat {
         const response = await fetch(routes.chatLog, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken,
+                "Authorization": accessToken,
             },
         });
         const json = await response.json();

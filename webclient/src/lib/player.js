@@ -54,7 +54,7 @@ export class PlayerList {
         const response = await fetch(routes.players, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken,
+                "Authorization": accessToken,
             },
         });
         const json = await response.json();

@@ -1,6 +1,7 @@
 package net.msimod.common.auth;
 
 import java.net.URL;
+import java.util.Base64;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,10 +42,6 @@ public class Auth {
      */
     public static boolean validateToken(HttpServletRequest request, HttpServletResponse response) {
         var token = request.getHeader("Authorization");
-        // Strip the "Bearer " prefix
-        if (token != null && token.startsWith("Bearer "))
-            token = token.substring(7);
-
         var valid = validateToken(token);
         if (!valid)
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

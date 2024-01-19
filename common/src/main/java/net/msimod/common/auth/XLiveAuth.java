@@ -1,6 +1,7 @@
 package net.msimod.common.auth;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 
 import org.eclipse.jetty.client.HttpClient;
@@ -96,7 +97,8 @@ public class XLiveAuth {
      * @throws ClassCastException
      */
     public static String GetAccessToken(String token) throws JsonSyntaxException {
-        var tokenMap = new Gson().fromJson(token, HashMap.class);
+        var tokenDecoded = new String(Base64.getDecoder().decode(token));
+        var tokenMap = new Gson().fromJson(tokenDecoded, HashMap.class);
         var tokenBearer = (String) tokenMap.get("Token");
         var xui = GetXui(token);
         var userhash = (String) xui.get("uhs");
@@ -111,7 +113,8 @@ public class XLiveAuth {
      * @throws ClassCastException
      */
     public static LinkedTreeMap<Object, Object> GetXui(String token) throws ClassCastException {
-        var tokenMap = new Gson().fromJson(token, HashMap.class);
+        var tokenDecoded = new String(Base64.getDecoder().decode(token));
+        var tokenMap = new Gson().fromJson(tokenDecoded, HashMap.class);
         var claims = LinkedTreeMap.class.cast(tokenMap.get("DisplayClaims"));
         var list = ArrayList.class.cast(claims.get("xui"));
         return LinkedTreeMap.class.cast(list.get(0));

@@ -99,6 +99,5 @@ public class ChatMessageHandler implements MessageHandler {
                 PlayerChatMessage.system(messageStr),
                 MsiMod.SERVER_PLAYER,
                 ChatType.bind(ChatType.CHAT, MsiMod.SERVER_PLAYER.createCommandSourceStack()));
-        MsiMod.SERVER_PLAYER.setCustomName(Component.literal(""));
     }
 }

@@ -38,22 +38,12 @@ public class WebClientServlet extends HttpServlet {
         try {
             var htmlPage = getClass().getClassLoader().getResourceAsStream("web/index.html");
             var bundleJs = getClass().getClassLoader().getResourceAsStream("web/bundle.js");
-            // var fontwolf =
-            // getClass().getClassLoader().getResourceAsStream("web/assets/fonts/minecraftregular.woff");
-            // var fontwolfTwo = getClass().getClassLoader()
-            // .getResourceAsStream("web/assets/fonts/minecraftregular.woff2");
             assert bundleJs != null;
             assert htmlPage != null;
             var bundleJsString = new String(bundleJs.readAllBytes());
             var htmlString = new String(htmlPage.readAllBytes());
-            // var fontwolfString = Base64.encodeBase64(fontwolf.readAllBytes());
-            // var fontwolfTwoString = Base64.encodeBase64(fontwolfTwo.readAllBytes());
 
             htmlString = EmbedAssets(htmlString, "#script#", bundleJsString);
-            // htmlString = EmbedAssets(htmlString, "#fontwoff#", new
-            // String(fontwolfString));
-            // htmlString = EmbedAssets(htmlString, "#fontwoff2#", new
-            // String(fontwolfTwoString));
             return htmlString;
         } catch (IOException e) {
             MsiMod.LOGGER.error("Failed to load bundle.js");
