@@ -6,10 +6,16 @@ echo "eula=true" > ../fabric/run/eula.txt
 ./gradlew fabric:runServer > LOG.txt &
 # Wait for the server to start
 echo "Waiting for server"
-while ! netstat -tna | grep 'LISTEN\>' | grep -q ':8080\>'; do
+while true
     sleep 1
     # Print the new line added to the log file
     tail -n 1 LOG.txt
+
+    # Check if the server is done by accessing the log
+    if grep -q "Done!" LOG.txt
+    then
+        break
+    fi
 
     # Check if the server has failed
     if ! pgrep -x "gradlew" > /dev/null
