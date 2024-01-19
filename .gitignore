@@ -21,3 +21,5 @@ classes/
 node_modules
 dist/
 package-lock.json
+
+.architectury-transformer

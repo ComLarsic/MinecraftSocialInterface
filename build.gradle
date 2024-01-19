@@ -19,9 +19,15 @@ subprojects {
         mappings loom.officialMojangMappings()
 
         // Jetty 
-        implementation "org.eclipse.jetty:jetty-server:9.4.26.v20200117"
-        implementation "org.eclipse.jetty:jetty-servlet:9.4.26.v20200117"
-        implementation "javax.servlet:javax.servlet-api:3.1"
+        modImplementation "org.eclipse.jetty:jetty-server:9.4.26.v20200117"
+        modImplementation "org.eclipse.jetty:jetty-servlet:9.4.26.v20200117"
+        modImplementation "org.eclipse.jetty:jetty-servlets:9.4.26.v20200117"
+        modImplementation "org.eclipse.jetty.websocket:websocket-server:9.4.26.v20200117"
+        modImplementation "javax.servlet:javax.servlet-api:3.1"
+        // oauth2     
+        modImplementation 'com.auth0:java-jwt:4.4.0'
+        modImplementation 'com.auth0:jwks-rsa:0.22.1'
+        modImplementation 'com.nimbusds:nimbus-jose-jwt:9.10.1'
     }
 }
 
@@ -35,11 +41,6 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
     }
 
     tasks.withType(JavaCompile) {

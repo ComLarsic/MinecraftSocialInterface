@@ -1,6 +1,10 @@
 import { LitElement, html, css } from "https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js";
+import { Chat, ChatMessage } from "../lib/chat";
 
-export class ChatBox extends LitElement {
+/**
+ * The live chat box
+ */
+export class ChatBoxElement extends LitElement {
     static get properties() {
         return {
             messages: { type: Array }
@@ -14,10 +18,15 @@ export class ChatBox extends LitElement {
                 height: 400px;
                 overflow: scroll;
                 auto-scroll: true;
+
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
             }
 
             input {
                 width: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
             }
         `;
     }
@@ -25,21 +34,15 @@ export class ChatBox extends LitElement {
     constructor() {
         super();
         this.messages = [];
-
-        setTimeout(() => {
-            this.fetchData();
-        }, 50);
-    }
-
-    fetchData() {
-        fetch("/api/chat/log")
-            .then(response => response.json())
+        Chat.getLog()
             .then(data => {
-                this.messages = data;
+                data.map(msg => this.messages.push(msg));
+                this.messages = [...this.messages];
             });
-        setTimeout(() => {
-            this.fetchData();
-        }, 50);
+        Chat.registerCallback(msg => {
+            this.messages.push(new ChatMessage(msg.data));
+            this.messages = [...this.messages];
+        })
     }
 
     render() {
@@ -54,14 +57,9 @@ export class ChatBox extends LitElement {
         e.target.value = "";
     }
 
-    _handleSend(message) {
-        fetch("/api/chat/send?message=" + message, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-    }
+    async _handleSend(message) {
+        await Chat.sendChat(message);
+    };
 }
 
 /**
@@ -74,4 +72,4 @@ const formatMessage = (message) => {
     return name + message.contents + "\n";
 }
 
-customElements.define("chat-box", ChatBox);
+customElements.define("chat-box", ChatBoxElement);

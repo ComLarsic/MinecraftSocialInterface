@@ -6,7 +6,7 @@ import dev.architectury.event.events.common.PlayerEvent;
 /**
  * Handles registering the chat events
  */
-public class ChatLogEventRegistrar {
+public class ChatLogEventRegistry {
     /**
      * Registers the chat events handlers
      */
