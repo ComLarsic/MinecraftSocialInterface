@@ -19,7 +19,7 @@ jobs:
       - run: "cd webclient && npm install"
       - run: "chmod +x ./gradlew"
       - run: "./gradlew fabric:build"
-      - run: "cd webclient && sh cypress.sh"
+      - run: "sh webclient/cypress.sh"
       - name: Post Server
         if: always()
         run: |
