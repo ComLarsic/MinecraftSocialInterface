@@ -1,7 +1,7 @@
 # Create the fabric/run directory if it doesn't exist
 mkdir -p fabric/run
 # Add the eula file
-echo "eula=true" > ../fabric/run/eula.txt
+echo "eula=true" > fabric/run/eula.txt
 # Start the server
 ./gradlew fabric:runServer > LOG.txt &
 # Wait for the server to start
