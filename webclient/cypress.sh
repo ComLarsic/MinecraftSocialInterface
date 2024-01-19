@@ -10,6 +10,12 @@ while ! netstat -tna | grep 'LISTEN\>' | grep -q ':8080\>'; do
     sleep 1
     # Print the new line added to the log file
     tail -n 1 LOG.txt
+
+    # Check if the server has failed
+    if ! pgrep -x "gradlew" > /dev/null
+    then
+        break
+    fi
 done
 # Start the cypress tests
 echo "Webclient is up"
