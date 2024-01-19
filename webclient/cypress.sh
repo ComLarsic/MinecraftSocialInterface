@@ -6,7 +6,8 @@ echo "eula=true" > ../fabric/run/eula.txt
 ./gradlew fabric:runServer > LOG.txt &
 # Wait for the server to start
 echo "Waiting for server"
-while true
+while true 
+do
     sleep 1
     # Print the new line added to the log file
     tail -n 1 LOG.txt
