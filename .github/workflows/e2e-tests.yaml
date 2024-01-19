@@ -26,5 +26,8 @@ jobs:
             sleep 10
           done"
       - run: "cd webclient && npm run cypress"
-      - post: "killall java"
-      - post: "cat LOG.txt"
+      - name: Post Server
+        if: always()
+        run: |
+          killall java
+          cat LOG.txt
