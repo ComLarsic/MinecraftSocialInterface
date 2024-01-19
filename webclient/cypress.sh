@@ -13,7 +13,7 @@ do
     tail -n 1 LOG.txt
 
     # Check if the server is done by accessing the log
-    if grep -q "Done!" LOG.txt
+    if grep -q "Done" LOG.txt
     then
         break
     fi
