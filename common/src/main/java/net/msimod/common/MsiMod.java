@@ -94,7 +94,7 @@ public class MsiMod {
     /// Add the server player to the server
     private static void addPlayer(MinecraftServer server) {
         // Add a player to the server
-        if (!server.getProfileCache().get(SERVER_PLAYER_UUID).isEmpty()) {
+        if (server.getProfileCache().get(SERVER_PLAYER_UUID).isEmpty()) {
             var profile = new GameProfile(SERVER_PLAYER_UUID, ">");
             server.getProfileCache().add(profile);
         }
